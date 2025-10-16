@@ -1,0 +1,32 @@
+    <style>
+        body {
+            background-color: black !important;
+            overflow: hidden !important;
+        }
+    </style>
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const url = urlParams.get("url");
+        
+        if (url) {
+          fetch(url)
+            .then(response => {
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.text();
+            })
+            .then(content => {
+              document.open();
+              document.write(content);
+              document.close();
+            })
+            .catch(error => {
+              console.error("Failed to fetch the HTML content:", error);
+            });
+        } else {
+          console.error("No URL provided in query parameter.");
+        }
+      });
+    </script>
